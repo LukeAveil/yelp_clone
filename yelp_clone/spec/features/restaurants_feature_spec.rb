@@ -21,7 +21,6 @@ feature 'restaurants have been added' do
     end
   end
 
-
   context 'creating restaurants' do
     scenario 'prompts user to fill out a form, then displays the new restaurant' do
       visit '/restaurants'
@@ -33,13 +32,27 @@ feature 'restaurants have been added' do
     end
   end
 
-  context 'viewing restaurants' do
-    let!(:kfc){ Restaurant.create(name:'KFC') }
-    scenario 'lets a user view a restaurant' do
+  # context 'viewing restaurants' do
+  #   let!(:kfc){ Restaurant.create(name:'KFC') }
+  #   scenario 'lets a user view a restaurant' do
+  #     visit '/restaurants'
+  #     click_link 'KFC'
+  #     expect(page).to have_content 'KFC'
+  #     expect(current_path).to eq "/restaurants/#{kfc.id}"
+  #   end
+  # end
+
+  context 'editing restaurants' do
+    before { Restaurant.create name: 'KFC', description: 'Deep fried nom'}
+    scenario 'let a user edit a restaurant' do
       visit '/restaurants'
-      click_link 'KFC'
+      click_link 'Edit KFC'
+      fill_in 'Name', with: 'KFC'
+      fill_in 'Description', with: 'Deep fried nom'
+      click_button 'Update Restaurant'
       expect(page).to have_content 'KFC'
-      expect(current_path).to eq "/restaurants/#{kfc.id}"
+      expect(page).to have_content 'Deep fried nom'
+      expect(current_path).to eq '/restaurants'
     end
   end
 end
