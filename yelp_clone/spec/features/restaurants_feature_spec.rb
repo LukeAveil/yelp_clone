@@ -11,9 +11,7 @@ feature 'restaurants have been added' do
   end
 
   context 'a restaurant has been added' do
-    before do
-      Restaurant.create(name: 'KFC')
-    end
+    before { Restaurant.create(name: 'KFC') }
     scenario 'displays restaurants' do
       visit '/restaurants'
       expect(page).to have_content('KFC')
