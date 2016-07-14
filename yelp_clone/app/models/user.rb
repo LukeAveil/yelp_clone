@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+
+  has_many :reviewed_restaurants, through: :reviews, source: :restaurant
+  has_many :restaurants
+  has_many :reviews
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -11,4 +15,6 @@ class User < ActiveRecord::Base
       user.password = Devise.friendly_token[0,20]
     end
   end
+
+  
 end
